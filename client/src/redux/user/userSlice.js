@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     currentUser: null,
@@ -13,18 +13,25 @@ const userSlice = createSlice({
         signInStart: (state) => {
             state.loading = true;
         },
-        signInSuccess: (state,action) => {
+        signInSuccess: (state, action) => {
             state.currentUser = action.payload;
             state.loading = false;
             state.error = null;
         },
-        signInFailure: (state,action) => {
+        signInFailure: (state, action) => {
             state.error = action.payload;
             state.loading = false;
-        }
-    }
+        },
+        // Add the updateUser reducer
+        updateUser: (state, action) => {
+            state.currentUser = {
+                ...state.currentUser,
+                ...action.payload, // Merge the new user data
+            };
+        },
+    },
 });
 
-export const {signInStart, signInSuccess, signInFailure } = userSlice.actions;
-
+// Export the actions
+export const { signInStart, signInSuccess, signInFailure, updateUser } = userSlice.actions;
 export default userSlice.reducer;
